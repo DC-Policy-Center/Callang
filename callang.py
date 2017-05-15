@@ -86,12 +86,12 @@ def script(lang,filename):
 '''
 
 def script(filename):
-    fnm.fnmatch(filename,'*.m')
     if filename == 'help':
         print('help')
     elif fnm.fnmatch(filename,'*.m'):
         lang = 'Octave'
         lang_path = octave_cli_path
+        #filename = 'source("%s")'%(filename)
     elif fnm.fnmatch(filename,'*.r'):
         lang = 'R'
         lang_path = rscript_path
