@@ -1,4 +1,5 @@
 import subprocess
+import fnmatch as fnm
 
 '''
 subprocess.call(['executable path','filename']
@@ -68,7 +69,7 @@ def cli(lang):
         subprocess.call(r_cli_path)
     else:
         print('Not a valid Command Line Interface name...')
-
+''' REMOVING FOR NOW, I am considering adding one for explicit and one for non-explicit filename reading
 def script(lang,filename):
     str_lang = str(lang).lower()
     if str_lang == 'help':
@@ -80,5 +81,22 @@ def script(lang,filename):
     else:
         print('Not a valid language')
     print('Running:\n\n   ---File:     [ %s ]\n   ---Language: [ %s ]\n...'%(filename,str_lang.upper()))
+    sub_call = [lang_path,filename]
+    subprocess.call(sub_call)
+'''
+
+def script(filename):
+    fnm.fnmatch(filename,'*.m')
+    if filename == 'help':
+        print('help')
+    elif fnm.fnmatch(filename,'*.m'):
+        lang = 'Octave'
+        lang_path = octave_cli_path
+    elif fnm.fnmatch(filename,'*.r'):
+        lang = 'R'
+        lang_path = rscript_path
+    else:
+        print('Not a valid language')
+    print('Running:\n\n   ---File:     [ %s ]\n   ---Language: [ %s ]\n...'%(filename,lang))
     sub_call = [lang_path,filename]
     subprocess.call(sub_call)
