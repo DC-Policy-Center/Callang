@@ -15,18 +15,23 @@ r has:
     -Rscript.exe
 
 '''
-
+loc = 'home'
 # Currently hardcoded paths
 octave_cli_path = 'C:\\Octave\\Octave-4.2.1\\bin\\octave-cli.exe'
 octave_gui_path = 'C:\\Octave\\Octave-4.2.1\\bin\\octave-gui.exe'
+# 3.3.2 version on work computer, 3.4.0 on home
+if loc == 'work':
+    rscript_path = 'C:\\Program Files\\R\\R-3.3.2\\bin\\Rscript.exe'
+    r_cli_path = 'C:\\Program Files\\R\\R-3.3.2\\bin\\R.exe'
+elif loc == 'home':
+    rscript_path = 'C:\\Program Files\\R\\R-3.4.0\\bin\\Rscript.exe'
+    r_cli_path = 'C:\\Program Files\\R\\R-3.4.0\\bin\\R.exe'
 
-rscript_path = 'C:\\Program Files\\R\\R-3.3.2\\bin\\Rscript.exe'
-r_cli_path = 'C:\\Program Files\\R\\R-3.3.2\\bin\\R.exe'
 r_gui_path = 'C:\\Program Files\\RStudio\\bin\\rstudio.exe' # actually calling RStudio not R
 
 def test():
-    r_file = 'rtest.r'
-    m_file = 'test2.m'
+    r_file = '.\\Scripts\\rtest.r'
+    m_file = '.\\Scripts\\test2.m'
 
 
     sub_call_octave = [octave_cli_path,m_file]
