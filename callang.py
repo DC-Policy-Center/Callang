@@ -1,32 +1,53 @@
+'''
+Callang calls other languages to run scripts while in python.
+There are two languages being implemented now: Octave and R.
+These languages have different executables associated with their calling processing
+
+|- Octave -           |  - R -
+|-----------------------------------------------|
+    - octave.exe       |       -R.exe          |
+    - octave-cli.exe   |       -Rscript.exe    |
+    - octave-gui.exe   |                       |
+-----------------------------------------------|
+Dependencies: OS, subprocess, fnmatch;
+
+
+
+|Signature-------------------------------------------|
+|Written for DC Policy Center by Michael Watson; 2017|
+|www.DCPolicyCenter.org / DC-Policy-Center.github.io |
+|github:M-Watson & MW-DC-Policy-Center               |
+|----------------------------------------------------|
+'''
+
 import subprocess
 import fnmatch as fnm
 
-'''
-subprocess.call(['executable path','filename']
-subprocess.call(['C:\\Octave\\Octave-4.2.1\\bin\\octave-gui.exe','test2.m'])
+import os
+import sys
 
-octave has:
-    -octave.exe
-    -octave-cli.exe
-    -octave-gui.exe
+sys.path.append('./lib/')
 
-r has:
-    -R.exe
-    -Rscript.exe
+import callangHelpers
 
-'''
-loc = 'home'
-# Currently hardcoded paths
-octave_cli_path = 'C:\\Octave\\Octave-4.2.1\\bin\\octave-cli.exe'
-octave_gui_path = 'C:\\Octave\\Octave-4.2.1\\bin\\octave-gui.exe'
-# 3.3.2 version on work computer, 3.4.0 on home
-if loc == 'work':
-    rscript_path = 'C:\\Program Files\\R\\R-3.3.2\\bin\\Rscript.exe'
-    r_cli_path = 'C:\\Program Files\\R\\R-3.3.2\\bin\\R.exe'
-elif loc == 'home':
-    rscript_path = 'C:\\Program Files\\R\\R-3.4.0\\bin\\Rscript.exe'
-    r_cli_path = 'C:\\Program Files\\R\\R-3.4.0\\bin\\R.exe'
+#### Find the versions of the languages if installed in default windows locations ##
+# Default R location with versioning in windows
+r_abs_path = 'C:\\Program Files\\R\\'
+r_version = callangHelpers.directoryClean('r')
 
+# Default Octave location with versioning in windows
+octave_abs_path = 'C:\\Octave\\'
+octave_version = callangHelpers.directoryClean('octave')
+
+
+### Currently semi-hardcoded paths, will only work in default install on windows ###
+# Octave paths
+octave_cli_path = '%s%s\\bin\\octave-cli.exe'%(octave_abs_path,octave_version)
+octave_gui_path = '%s%s\\bin\\octave-gui.exe'%(octave_abs_path,octave_version)
+# R Paths
+rscript_path = '%s%s\\bin\\Rscript.exe'%(r_abs_path,r_version)
+r_cli_path = '%s%s\\bin\\R.exe'%(r_abs_path,r_version)
+# R Studio default path
 r_gui_path = 'C:\\Program Files\\RStudio\\bin\\rstudio.exe' # actually calling RStudio not R
 
 def test():
@@ -39,26 +60,33 @@ def test():
 
     subprocess.call(sub_call_octave)
 
-''' STANDARD LANG IF STATEMENTS
-str_lang = str(lang).lower()
-if str_lang == 'help':
-    print('help')
-elif str_lang == 'octave':
-    DO OCTAVE THING
-elif str_lang == 'r':
-    DO R THING
-else:
-    print('Not a valid language...')
-'''
 
-
-def gui(lang):
+def version(lang):
+# Check the version of a language installed
     str_lang = str(lang).lower()
     if str_lang == 'help':
-        print('help')
+        print('version(lang) checks the version of the [lang] requsted')
+        print('Current avaliable languages are: ')
+        print('- Octave\n- R')
     elif str_lang == 'octave':
+        print('You are working with Octave version: %s'%(octave_version))
+    elif str_lang == 'r':
+        print('You are working with R version: %s'%(r_version))
+    else:
+        print('Not a valid language...')
+
+def gui(lang):
+# gui(lang) Open the corresponding GUI for the requsted [lang]
+    str_lang = str(lang).lower()
+    if str_lang == 'help':
+        print('gui(lang) Open the corresponding GUI for the requsted [lang]')
+        print('Current avaliable GUIs are: ')
+        print('- Octave\n- R (through R Studio)')
+    elif str_lang == 'octave':
+        print('Opening GUI for %s ...\n\n'%(str_lang))
         subprocess.call(octave_gui_path)
     elif str_lang == 'r':
+        print('Opening GUI for %s ...\n\n'%(str_lang))
         subprocess.call(r_gui_path)
     else:
         print('Not a valid language...')
@@ -69,26 +97,13 @@ def cli(lang):
         print('Current avaliable CLIs are: ')
         print('- Octave\n- R')
     elif str_lang == 'octave':
+        print('Opening CLI for %s ...\n\n'%(str_lang))
         subprocess.call(octave_cli_path)
     elif str_lang == 'r':
+        print('Opening CLI for %s ...\n\n'%(str_lang))
         subprocess.call(r_cli_path)
     else:
         print('Not a valid Command Line Interface name...')
-''' REMOVING FOR NOW, I am considering adding one for explicit and one for non-explicit filename reading
-def script(lang,filename):
-    str_lang = str(lang).lower()
-    if str_lang == 'help':
-        print('help')
-    elif str_lang == 'octave':
-        lang_path = octave_cli_path
-    elif str_lang == 'r':
-        lang_path = rscript_path
-    else:
-        print('Not a valid language')
-    print('Running:\n\n   ---File:     [ %s ]\n   ---Language: [ %s ]\n...'%(filename,str_lang.upper()))
-    sub_call = [lang_path,filename]
-    subprocess.call(sub_call)
-'''
 
 def script(filename):
     if filename == 'help':
