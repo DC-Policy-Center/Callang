@@ -23,6 +23,7 @@ Callang calls other languages to run scripts while in python.
 - Octave (.m) files will only run on relative paths if they are scripts, not functions
 - <s>Different versions of R installed are located in different folders.  This can be solved by reading the directory with os rather than hardcoded.</s>
   - Solved, somewhat ugly but reads directory, creates a string of the folder name and version, and then appends as the directory absolute path.  Still only works on windows and in default installation location.
+
 -GUI call leaves command line inoperable until the GUI is closed
 
 
