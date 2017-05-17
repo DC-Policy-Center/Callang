@@ -3,12 +3,15 @@ Callang calls other languages to run scripts while in python.
 There are two languages being implemented now: Octave and R.
 These languages have different executables associated with their calling processing
 
-|- Octave -           |  - R -
-|-----------------------------------------------|
-    - octave.exe       |       -R.exe          |
-    - octave-cli.exe   |       -Rscript.exe    |
-    - octave-gui.exe   |                       |
------------------------------------------------|
+##### Executables used in python's subpocess call to run CLI, GUI, or Script
+
+| <center> Use </center>         | Octave           | R           |
+|:-------------------------------|:----------------:|:-----------:|
+|Script execution                | octave.exe       | R.exe       |
+|Command line interface (CLI)    | octave-cli.exe   | R.exe       |
+|Graphical user interface (GUI)  | octave-gui.exe   | Rstudio.exe |
+
+
 Dependencies: OS, subprocess, fnmatch;
 
 
