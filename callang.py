@@ -30,12 +30,12 @@ import os
 import sys
 
 sys.path.append('./lib/')
-
+sep = sys.path.sep()
 import callangHelpers
 
 #### Find the versions of the languages if installed in default windows locations ##
 # Default R location with versioning in windows
-r_abs_path = 'C:\\Program Files\\R\\'
+r_abs_path = 'C:'+sep+'Program Files\\R'+sep
 r_version = callangHelpers.directoryClean('r')
 
 # Default Octave location with versioning in windows
@@ -52,6 +52,12 @@ rscript_path = '%s%s\\bin\\Rscript.exe'%(r_abs_path,r_version)
 r_cli_path = '%s%s\\bin\\R.exe'%(r_abs_path,r_version)
 # R Studio default path
 r_gui_path = 'C:\\Program Files\\RStudio\\bin\\rstudio.exe' # actually calling RStudio not R
+
+
+# Git paths
+
+# Bash paths
+
 
 def test():
     r_file = '.\\Scripts\\rtest.r'
