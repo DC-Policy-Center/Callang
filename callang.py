@@ -30,7 +30,8 @@ import os
 import sys
 
 sys.path.append('./lib/')
-sep = sys.path.sep()
+sep = os.path.sep
+
 import callangHelpers
 
 #### Find the versions of the languages if installed in default windows locations ##
@@ -55,6 +56,7 @@ r_gui_path = 'C:\\Program Files\\RStudio\\bin\\rstudio.exe' # actually calling R
 
 
 # Git paths
+git_cli_path ='C:'+sep+'Users'+sep+'mwatson'+sep+'AppData'+sep+'Local'+sep+'GitHub'+sep+'PortableGit_f02737a78695063deace08e96d5042710d3e32db'+sep+'git-cmd.exe'
 
 # Bash paths
 
@@ -111,6 +113,9 @@ def cli(lang):
     elif str_lang == 'r':
         print('Opening CLI for %s ...\n\n'%(str_lang))
         subprocess.call(r_cli_path)
+    elif str_lang == 'git':
+        print('Opening CLI for %s ...\n\n'%(str_lang))
+        subprocess.call(git_cli_path)
     else:
         print('Not a valid Command Line Interface name...')
 
